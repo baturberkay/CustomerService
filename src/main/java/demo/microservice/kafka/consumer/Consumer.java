@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 public class Consumer {
     @KafkaListener(topics = "order-created")
     public void process(String content){
-        System.out.println("------------ content -----------: "+ content);
+        System.out.println(content);
     }
 }

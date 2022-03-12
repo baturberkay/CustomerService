@@ -9,7 +9,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 
 
 @SpringBootApplication
-@ComponentScan({"demo.microservice.controller","demo.microservice.serviceImpl","demo.microservice.kafka.consumer","demo.microservice.kafka.producer"})
+@ComponentScan({"demo.microservice.controller","demo.microservice.serviceImpl","demo.microservice.kafka"})
 @EntityScan("demo.microservice.entity")
 @EnableJpaRepositories("demo.microservice.repository")
 @EnableKafka
