@@ -33,18 +33,9 @@ public class CustomerRestController {
         return customerService.findById(id);
     }
 
-//    @PostMapping
-//    public ResponseEntity<String> saveProduct(@RequestBody Customer product) {
-    @PostMapping
-    public ResponseEntity<String> saveProduct() {
-//        Customer savedProduct = customerRepository.save(product);
-//        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(savedProduct.getId())
-//                .toUri();
-//        return ResponseEntity.created(uri).build();
+    @PostMapping("/save")
+    public ResponseEntity<String> saveCustomer() {
         Customer customer = new Customer();
-        customer.setId(1);
         customer.setName("test");
         customer.setCustomerLimit(120L);
         return new ResponseEntity<>(customerService.save(customer).toString(), HttpStatus.ACCEPTED);
