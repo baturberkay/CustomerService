@@ -1,6 +1,8 @@
 package demo.microservice.controller;
 
+import demo.microservice.TopicNamesEnum;
 import demo.microservice.entity.Customer;
+import demo.microservice.kafka.producer.Producer;
 import demo.microservice.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,11 @@ public class CustomerRestController {
 
     private final CustomerService customerService;
 
-    public CustomerRestController(CustomerService customerService) {
+    private final Producer producer;
+
+    public CustomerRestController(CustomerService customerService, Producer producer) {
         this.customerService = customerService;
+        this.producer = producer;
     }
 
     @GetMapping
@@ -38,6 +43,8 @@ public class CustomerRestController {
         Customer customer = new Customer();
         customer.setName("test");
         customer.setCustomerLimit(120L);
-        return new ResponseEntity<>(customerService.save(customer).toString(), HttpStatus.ACCEPTED);
+        Customer savedCustomer = customerService.save(customer);
+        producer.send(TopicNamesEnum.CUSTOMER_REPLY.getValue(), String.valueOf(savedCustomer.getId()));
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
